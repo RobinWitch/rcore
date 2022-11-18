@@ -1,0 +1,9 @@
+# os/.cargo/config
+[build]
+target = "riscv64gc-unknown-none-elf"
+
+#set link script "linker.ld" when set linking
+[target.riscv64gc-unknown-none-elf]
+rustflags = [
+    "-Clink-arg=-Tsrc/linker.ld", "-Cforce-frame-pointers=yes"
+]
