@@ -12,3 +12,9 @@ pub fn sys_exit(exit_code: i32) -> ! {
     exit_current_and_run_next();
     panic!("Unreachable in sys_exit!");
 }
+
+use crate::timer::get_time_ms;
+use crate::timer::get_time_us;
+pub fn sys_get_time() -> isize {
+    get_time_us() as isize
+}
