@@ -15,7 +15,6 @@ mod lang_items;
 #[no_mangle] 
 #[link_section = ".text.entry"]
 pub extern "C" fn _start() -> ! {
-    clear_bss();
     exit(main());
     panic!("unreachable after sys_exit!");
 }

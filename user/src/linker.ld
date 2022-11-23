@@ -1,6 +1,6 @@
 OUTPUT_ARCH(riscv)
 ENTRY(_start)
-BASE_ADDRESS = 0x80400000;
+BASE_ADDRESS = 0x10000;
 
 SECTIONS
 {
@@ -44,6 +44,7 @@ SECTIONS
 
     /DISCARD/ : {
         *(.eh_frame)
+        *(.debug*)  #没有这行会出现Panicked at src/mm/address.rs:202 start VPN:0x80a9f > end VPN:0x80800!的报错
     }
 }
 
