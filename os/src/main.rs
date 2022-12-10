@@ -36,16 +36,22 @@ global_asm!(include_str!("entry.asm"));
 global_asm!(include_str!("link_app.S"));
 
 #[no_mangle]
+/// the rust entry-point of os
 pub fn rust_main() -> ! {
     clear_bss();
-    println!("[kernel] Je t'aime,Je t'aime,Mon Amour");
+    println!("[kernel] Hello, world!");
     mm::init();
+    task::add_initproc();
+    println!("after initproc!");
     trap::init();
-    trap::enable_timer_interrupt(); //设置了 sie.stie 使得 S 特权级时钟中断不会被屏蔽
-    timer::set_next_trigger();      //设置第一个 10ms 的计时器
-    task::run_first_task();
-    panic!("Shutdown machine!");
+    //trap::enable_interrupt();
+    trap::enable_timer_interrupt();
+    timer::set_next_trigger();
+    loader::list_apps();
+    task::run_tasks();
+    panic!("Unreachable in rust_main!");
 }
+
 
 fn clear_bss() {
     extern "C" {

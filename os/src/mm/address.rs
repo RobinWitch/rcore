@@ -250,6 +250,11 @@ where
         }
     }
 }
-
+impl PhysAddr {
+    ///Get mutable reference to `PhysAddr` value
+    pub fn get_mut<T>(&self) -> &'static mut T {
+        unsafe { (self.0 as *mut T).as_mut().unwrap() }
+    }
+}
 /// a simple range structure for virtual page number
 pub type VPNRange = SimpleRange<VirtPageNum>;

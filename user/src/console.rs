@@ -1,10 +1,10 @@
 // user/src/console.rs
-use super::write;
+use super::{read, write};
 use core::fmt::{self, Write};
 
 struct Stdout;
 const STDOUT: usize = 1;
-
+const STDIN: usize = 0;
 
 // in this place I'm a little puzzled about the usage of const STDOUT instead of struct STDOUT
 
@@ -14,6 +14,8 @@ impl Write for Stdout {
         Ok(())
     }
 }
+
+
 pub fn print(args: fmt::Arguments) {
     Stdout.write_fmt(args).unwrap();
 }
@@ -30,4 +32,10 @@ macro_rules! println {
     ($fmt: literal $(, $($arg: tt)+)?) => {
         $crate::console::print(format_args!(concat!($fmt, "\n") $(, $($arg)+)?));
     }
+}
+
+pub fn getchar() -> u8 {
+    let mut c = [0u8; 1];
+    read(STDIN, &mut c);
+    c[0]
 }
